@@ -76,7 +76,13 @@ static NSString* const kCLClippingToolRatioTitleFormat = @"titleFormat";
              @{kCLClippingToolRatioValue1:@1, kCLClippingToolRatioValue2:@1, kCLClippingToolRatioTitleFormat:@"%g : %g"},
              @{kCLClippingToolRatioValue1:@4, kCLClippingToolRatioValue2:@3, kCLClippingToolRatioTitleFormat:@"%g : %g"},
              @{kCLClippingToolRatioValue1:@3, kCLClippingToolRatioValue2:@2, kCLClippingToolRatioTitleFormat:@"%g : %g"},
+             @{kCLClippingToolRatioValue1:@5, kCLClippingToolRatioValue2:@4, kCLClippingToolRatioTitleFormat:@"%g : %g"},
+             @{kCLClippingToolRatioValue1:@7, kCLClippingToolRatioValue2:@6, kCLClippingToolRatioTitleFormat:@"%g : %g"},
              @{kCLClippingToolRatioValue1:@16, kCLClippingToolRatioValue2:@9, kCLClippingToolRatioTitleFormat:@"%g : %g"},
+//             @{kCLClippingToolRatioValue1:@2, kCLClippingToolRatioValue2:@3, kCLClippingToolRatioTitleFormat:@"%g : %g"},
+//             @{kCLClippingToolRatioValue1:@4, kCLClippingToolRatioValue2:@6, kCLClippingToolRatioTitleFormat:@"%g : %g"},
+             @{kCLClippingToolRatioValue1:@7, kCLClippingToolRatioValue2:@5, kCLClippingToolRatioTitleFormat:@"%g : %g"},
+             
              ];
 }
 
@@ -142,7 +148,7 @@ static NSString* const kCLClippingToolRatioTitleFormat = @"titleFormat";
     _menuContainer.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-_menuScroll.top);
     [UIView animateWithDuration:kCLImageToolAnimationDuration
                      animations:^{
-                         self->_menuContainer.transform = CGAffineTransformIdentity;
+                         _menuContainer.transform = CGAffineTransformIdentity;
                      }];
 }
 
@@ -153,10 +159,10 @@ static NSString* const kCLClippingToolRatioTitleFormat = @"titleFormat";
     
     [UIView animateWithDuration:kCLImageToolAnimationDuration
                      animations:^{
-                         self->_menuContainer.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-self->_menuScroll.top);
+                         _menuContainer.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-_menuScroll.top);
                      }
                      completion:^(BOOL finished) {
-                         [self->_menuContainer removeFromSuperview];
+                         [_menuContainer removeFromSuperview];
                      }];
 }
 
@@ -436,10 +442,10 @@ static NSString* const kCLClippingToolRatioTitleFormat = @"titleFormat";
     if(animated){
         [UIView animateWithDuration:kCLImageToolFadeoutDuration
                          animations:^{
-                             self->_ltView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x, clippingRect.origin.y) fromView:self];
-                             self->_lbView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x, clippingRect.origin.y+clippingRect.size.height) fromView:self];
-                             self->_rtView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x+clippingRect.size.width, clippingRect.origin.y) fromView:self];
-                             self->_rbView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x+clippingRect.size.width, clippingRect.origin.y+clippingRect.size.height) fromView:self];
+                             _ltView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x, clippingRect.origin.y) fromView:self];
+                             _lbView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x, clippingRect.origin.y+clippingRect.size.height) fromView:self];
+                             _rtView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x+clippingRect.size.width, clippingRect.origin.y) fromView:self];
+                             _rbView.center = [self.superview convertPoint:CGPointMake(clippingRect.origin.x+clippingRect.size.width, clippingRect.origin.y+clippingRect.size.height) fromView:self];
                          }
          ];
         

@@ -56,18 +56,14 @@ static NSString* const kCLAdjustmentToolContrastIconName = @"contrastIconAssetsN
 - (void)executeWithCompletionBlock:(void(^)(UIImage *image, NSError *error, NSDictionary *userInfo))completionBlock
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        self->_indicatorView = [CLImageEditorTheme indicatorView];
-        self->_indicatorView.center = self.editor.view.center;
-        [self.editor.view addSubview:self->_indicatorView];
-        [self->_indicatorView startAnimating];
+        _indicatorView = [CLImageEditorTheme indicatorView];
+        _indicatorView.center = self.editor.view.center;
+        [self.editor.view addSubview:_indicatorView];
+        [_indicatorView startAnimating];
     });
     
-    CGFloat saturation = _saturationSlider.value;
-    CGFloat brightness = _brightnessSlider.value;
-    CGFloat contrast   = _contrastSlider.value;
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *image = [self filteredImage:self->_originalImage saturation:saturation brightness:brightness contrast:contrast];
+        UIImage *image = [self filteredImage:_originalImage];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             completionBlock(image, nil, nil);
@@ -140,33 +136,29 @@ static NSString* const kCLAdjustmentToolContrastIconName = @"contrastIconAssetsN
     if(inProgress){ return; }
     inProgress = YES;
     
-    CGFloat saturation = _saturationSlider.value;
-    CGFloat brightness = _brightnessSlider.value;
-    CGFloat contrast   = _contrastSlider.value;
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *image = [self filteredImage:self->_thumbnailImage saturation:saturation brightness:brightness contrast:contrast];
+        UIImage *image = [self filteredImage:_thumbnailImage];
         [self.editor.imageView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:NO];
         inProgress = NO;
     });
 }
 
-- (UIImage*)filteredImage:(UIImage*)image saturation:(CGFloat)saturation brightness:(CGFloat)brightness contrast:(CGFloat)contrast
+- (UIImage*)filteredImage:(UIImage*)image
 {
     CIImage *ciImage = [[CIImage alloc] initWithImage:image];
     CIFilter *filter = [CIFilter filterWithName:@"CIColorControls" keysAndValues:kCIInputImageKey, ciImage, nil];
     
     [filter setDefaults];
-    [filter setValue:[NSNumber numberWithFloat:saturation] forKey:@"inputSaturation"];
+    [filter setValue:[NSNumber numberWithFloat:_saturationSlider.value] forKey:@"inputSaturation"];
     
     filter = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, [filter outputImage], nil];
     [filter setDefaults];
-    brightness = 2*brightness;
+    CGFloat brightness = 2*_brightnessSlider.value;
     [filter setValue:[NSNumber numberWithFloat:brightness] forKey:@"inputEV"];
     
     filter = [CIFilter filterWithName:@"CIGammaAdjust" keysAndValues:kCIInputImageKey, [filter outputImage], nil];
     [filter setDefaults];
-    contrast   = contrast * contrast;
+    CGFloat contrast   = _contrastSlider.value*_contrastSlider.value;
     [filter setValue:[NSNumber numberWithFloat:contrast] forKey:@"inputPower"];
     
     CIContext *context = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer : @(NO)}];

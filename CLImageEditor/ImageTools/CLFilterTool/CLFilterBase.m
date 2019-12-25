@@ -80,6 +80,8 @@
             @"CLDefaultNoirFilter"      : @{@"name":@"CIPhotoEffectNoir",        @"title":[CLImageEditorTheme localizedString:@"CLDefaultNoirFilter_DefaultTitle" withDefault:@"Noir"],       @"version":@(7.0), @"dockedNum":@(11.0)},
             @"CLDefaultMonoFilter"      : @{@"name":@"CIPhotoEffectMono",        @"title":[CLImageEditorTheme localizedString:@"CLDefaultMonoFilter_DefaultTitle" withDefault:@"Mono"],       @"version":@(7.0), @"dockedNum":@(12.0)},
             @"CLDefaultInvertFilter"    : @{@"name":@"CIColorInvert",            @"title":[CLImageEditorTheme localizedString:@"CLDefaultInvertFilter_DefaultTitle" withDefault:@"Invert"],     @"version":@(6.0), @"dockedNum":@(13.0)},
+//            @"CLDefaultInvertFilter"    : @{@"name":@"CIColorInvert",            @"title":[CLImageEditorTheme localizedString:@"CLDefaultInvertFilter_DefaultTitle" withDefault:@"Invert"],     @"version":@(6.0), @"dockedNum":@(14.0)},
+            
         };
     }
     return defaultFilterInfo;
@@ -128,7 +130,7 @@
     CIImage *ciImage = [[CIImage alloc] initWithImage:image];
     CIFilter *filter = [CIFilter filterWithName:filterName keysAndValues:kCIInputImageKey, ciImage, nil];
     
-    //NSLog(@"%@", [filter attributes]);
+    NSLog(@"%@", [filter attributes]);
     
     [filter setDefaults];
     

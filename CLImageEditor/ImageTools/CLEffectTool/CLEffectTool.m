@@ -57,7 +57,7 @@
     _menuScroll.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-_menuScroll.top);
     [UIView animateWithDuration:kCLImageToolAnimationDuration
                      animations:^{
-                         self->_menuScroll.transform = CGAffineTransformIdentity;
+                         _menuScroll.transform = CGAffineTransformIdentity;
                      }];
 }
 
@@ -70,24 +70,24 @@
     
     [UIView animateWithDuration:kCLImageToolAnimationDuration
                      animations:^{
-                         self->_menuScroll.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-self->_menuScroll.top);
+                         _menuScroll.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-_menuScroll.top);
                      }
                      completion:^(BOOL finished) {
-                         [self->_menuScroll removeFromSuperview];
+                         [_menuScroll removeFromSuperview];
                      }];
 }
 
 - (void)executeWithCompletionBlock:(void(^)(UIImage *image, NSError *error, NSDictionary *userInfo))completionBlock
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        self->_indicatorView = [CLImageEditorTheme indicatorView];
-        self->_indicatorView.center = self.editor.view.center;
-        [self.editor.view addSubview:self->_indicatorView];
-        [self->_indicatorView startAnimating];
+        _indicatorView = [CLImageEditorTheme indicatorView];
+        _indicatorView.center = self.editor.view.center;
+        [self.editor.view addSubview:_indicatorView];
+        [_indicatorView startAnimating];
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *image = [self.selectedEffect applyEffect:self->_originalImage];
+        UIImage *image = [self.selectedEffect applyEffect:_originalImage];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             completionBlock(image, nil, nil);
