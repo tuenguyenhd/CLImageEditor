@@ -1,2 +1,2 @@
-CLImageEditor
-Use CLImageEditor but add some improvement.
+## CLImageEditor
+Use CLImageEditor but add some improvements.
