@@ -20,9 +20,11 @@
 @property (nonatomic, weak) id<CLImageEditorDelegate> delegate;
 @property (nonatomic, readonly) CLImageEditorTheme *theme;
 @property (nonatomic, readonly) CLImageToolInfo *toolInfo;
+@property (nonatomic, strong) NSString *language;
 
 - (id)initWithImage:(UIImage*)image;
 - (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate;
+- (id)initWithImage:(UIImage*)image withLanguage:(NSString*) language delegate:(id<CLImageEditorDelegate>)delegate;
 - (id)initWithDelegate:(id<CLImageEditorDelegate>)delegate;
 
 - (void)showInViewController:(UIViewController<CLImageEditorTransitionDelegate>*)controller withImageView:(UIImageView*)imageView;

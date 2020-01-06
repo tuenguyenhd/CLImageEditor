@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UIColor  *toolbarSelectedButtonColor;
 @property (nonatomic, strong) UIFont   *toolbarTextFont;
 @property (nonatomic, assign) UIStatusBarStyle statusBarStyle;
+@property (nonatomic, strong) NSString *language;
 
 + (CLImageEditorTheme*)theme;
 

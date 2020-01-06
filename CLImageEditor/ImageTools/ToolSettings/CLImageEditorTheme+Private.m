@@ -50,9 +50,17 @@
 
 + (NSString*)localizedString:(NSString*)key withDefault:defaultValue
 {
-    NSString *str = NSLocalizedString(key, @"");
-    if(![str isEqualToString:key]){ return str; }
-    return NSLocalizedStringWithDefaultValue(key, nil, [CLImageEditorTheme bundle], defaultValue, @"");
+    if([CLImageEditorTheme theme].language) {
+        NSString *str = NSLocalizedString(key, @"");
+        if(![str isEqualToString:key]){ return str; }
+        NSString *language = [CLImageEditorTheme theme].language ? [CLImageEditorTheme theme].language : @"en" ;
+        NSString *tableName = [NSString stringWithFormat:@"%@", language];
+        
+        NSString *value = [[CLImageEditorTheme bundle] localizedStringForKey:key value:defaultValue table:tableName];
+        return value;
+    }
+    else
+        return NSLocalizedStringWithDefaultValue(key, nil, [CLImageEditorTheme bundle], defaultValue, @"");
 }
 
 #pragma mark color settings

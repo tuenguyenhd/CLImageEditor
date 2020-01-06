@@ -26,6 +26,13 @@
     return [self initWithImage:image delegate:nil];
 }
 
+- (id)initWithImage:(UIImage*)image withLanguage:(NSString*) language delegate:(id<CLImageEditorDelegate>)delegate {
+    [CLImageEditorTheme theme].language = language;
+    CLImageEditor *editor = [[_CLImageEditorViewController alloc] initWithImage:image delegate:delegate];
+    editor.language = language;
+    return editor;
+}
+
 - (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate
 {
     return [[_CLImageEditorViewController alloc] initWithImage:image delegate:delegate];
@@ -42,7 +49,7 @@
 }
 
 - (CLImageEditorTheme*)theme
-{
+{    
     return [CLImageEditorTheme theme];
 }
 

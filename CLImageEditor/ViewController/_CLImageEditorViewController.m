@@ -93,7 +93,11 @@
     
     if(_navigationBar==nil){
         UINavigationItem *navigationItem  = [[UINavigationItem alloc] init];
-        navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
+        NSString *cancelBtnTitle = [CLImageEditorTheme localizedString:@"CLImageEditor_CancelBtnTitle" withDefault:nil];
+
+        UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:cancelBtnTitle style:UIBarButtonItemStyleDone target:self action:@selector(pushedCloseBtn:)];
+        
+        navigationItem.leftBarButtonItem  = leftBarButtonItem; //[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
         navigationItem.rightBarButtonItem = rightBarButtonItem;
         
         CGFloat dy = ([UIDevice iosVersion]<7) ? 0 : MIN([UIApplication sharedApplication].statusBarFrame.size.height, [UIApplication sharedApplication].statusBarFrame.size.width);
